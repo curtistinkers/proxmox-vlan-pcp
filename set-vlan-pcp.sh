@@ -233,8 +233,8 @@ if [ ${OPT_CONFIRM} -eq 1 ]; then
   INGRESS=$(/usr/bin/ip -d link show "${IFACE}" | /usr/bin/grep "ingress" | sed 's/[[:space:]]*ingress-qos-map //g')
   EGRESS=$(/usr/bin/ip -d link show "${IFACE}" | /usr/bin/grep "egress" | sed 's/[[:space:]]*egress-qos-map //g')
 
-  printf "\nQoS priority for ${F_BOLD}${C_BLUE}%s${NO_FORMAT}:\n" "${IFACE}"
+  printf "\nVLAN QoS priority for ${F_BOLD}${C_BLUE}%s${NO_FORMAT}:\n" "${IFACE}"
   # echo "QoS priority for ${F_BOLD}${C_BLUE}${IFACE}${NO_FORMAT}:"
-  printf "\t${F_BOLD}${C_YELLOW}Ingress QoS map${NO_FORMAT}: %s", "${INGRESS}"
-  printf "\t${F_BOLD}${C_LIME}Egress QoS map${NO_FORMAT}: %s", "${EGRESS}"
+  printf "\t${F_BOLD}${C_YELLOW}Ingress QoS map${NO_FORMAT}: %s\n" "${INGRESS}"
+  printf "\t${F_BOLD}${C_LIME}Egress QoS map${NO_FORMAT}: %s\n" "${EGRESS}"
 fi
