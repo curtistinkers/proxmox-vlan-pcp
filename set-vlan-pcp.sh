@@ -2,14 +2,14 @@
 
 NO_FORMAT="\033[0m"
 F_BOLD="\033[1m"
-F_UNDERLINED="\033[4m"
+#_UNDERLINED="\033[4m"
 C_RED="\033[38;5;9m"
 C_BLUE="\033[38;5;12m"
 C_ORANGERED1="\033[38;5;202m"
 C_LIME="\033[38;5;10m"
 C_YELLOW="\033[38;5;11m"
 F_TAB="\t"
-F_NL="\n"
+#F_NL="\n"
 
 # Default options
 OPT_HELP=0
@@ -87,7 +87,7 @@ print_error() {
 
 print_verbose() {
   if [ ! ${OPT_VERBOSE} -eq 0 ]; then
-    echo ${1}
+    echo "${1}"
   fi
 }
 
@@ -136,35 +136,35 @@ set_pcp() {
       case ${1} in
         bk|BK)
           PCP=1
-          print_acronym_notice ${1} ${PCP}
+          print_acronym_notice "${1}" "${PCP}"
           ;;
         be|BE)
           PCP=0
-          print_acronym_notice ${1} ${PCP}
+          print_acronym_notice "${1}" "${PCP}"
           ;;
         ee|EE)
           PCP=2
-          print_acronym_notice ${1} ${PCP}
+          print_acronym_notice "${1}" "${PCP}"
           ;;
         ca|CA)
           PCP=3
-          print_acronym_notice ${1} ${PCP}
+          print_acronym_notice "${1}" "${PCP}"
           ;;
         vi|VI)
           PCP=4
-          print_acronym_notice ${1} ${PCP}
+          print_acronym_notice "${1}" "${PCP}"
           ;;
         vo|VO)
           PCP=5
-          print_acronym_notice ${1} ${PCP}
+          print_acronym_notice "${1}" "${PCP}"
           ;;
         ic|IC)
           PCP=6
-          print_acronym_notice ${1} ${PCP}
+          print_acronym_notice "${1}" "${PCP}"
           ;;
         nc|NC)
           PCP=7
-          print_acronym_notice ${1} ${PCP}
+          print_acronym_notice "${1}" "${PCP}"
           ;;
         *)
           BAD_PCP=1
@@ -212,6 +212,6 @@ PCP_STR=$(pcp_to_string "${PCP}")
 
 echo "Setting ${F_BOLD}${C_BLUE}${IFACE}${NO_FORMAT} interface egress QoS priority to ${F_BOLD}${C_LIME}${PCP_STR}${NO_FORMAT}"
 
-/usr/bin/ip link set ${IFACE} type vlan \
+/usr/bin/ip link set "${IFACE}" type vlan \
 	ingress 0:1 1:0 2:2 3:3 4:4 5:5 6:6 7:7 \
-	egress 0:${PCP} 1:${PCP} 2:${PCP} 3:${PCP} 4:${PCP} 5:${PCP} 6:${PCP} 7:${PCP}
+	egress 0:"${PCP}" 1:"${PCP}" 2:"${PCP}" 3:"${PCP}" 4:"${PCP}" 5:"${PCP}" 6:"${PCP}" 7:"${PCP}"
