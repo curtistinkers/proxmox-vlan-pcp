@@ -10,7 +10,6 @@ C_ORANGERED1="\033[38;5;202m"
 C_LIME="\033[38;5;10m"
 C_YELLOW="\033[38;5;11m"
 F_TAB="\t"
-F_NL="\n"
 
 # Default options
 OPT_HELP=0
@@ -92,20 +91,21 @@ while [ ${#} -gt 0 ]; do
 done
 
 get_help() {
-  echo "${F_NL}${C_YELLOW}VLAN QoS priority shell script${NO_FORMAT}"
+  echo ""
+  echo "${C_YELLOW}VLAN QoS priority shell script${NO_FORMAT}"
   echo "This script sets the VLAN priority code point (PCP) for a specified VLAN interface."
-
+  echo ""
   echo "Usage:"
-  echo "${F_TAB}${C_LIME}-h | --help${NO_FORMAT}${F_TAB}${F_TAB}This menu"
+  echo "${F_TAB}${C_LIME}-h | --help${NO_FORMAT}${F_TAB}${F_TAB}Usage information"
   echo "${F_TAB}${C_LIME}-v | --verbose${NO_FORMAT}${F_TAB}${F_TAB}Verbose output"
   echo "${F_TAB}${C_LIME}-i | --interface${NO_FORMAT}${F_TAB}VLAN interface name (ex vmbr0.19)"
-  echo "${F_TAB}${C_LIME}-p | --pcp${NO_FORMAT}${F_TAB}${F_TAB}VLAN priority code point, must be 0-7"
+  echo "${F_TAB}${C_LIME}-p | --pcp${NO_FORMAT}${F_TAB}${F_TAB}VLAN priority code point, must be 0-7 or an acronym"
   echo "${F_TAB}${C_LIME}-c | --confirm${NO_FORMAT}${F_TAB}${F_TAB}Show current VLAN priority code point mappings after setting"
   echo "${F_TAB}${C_LIME}-g | --get${NO_FORMAT}${F_TAB}${F_TAB}Get current VLAN priority code point mappings for interface"
-  echo "${F_NL}Priority code points:${F_NL}"
-
+  echo ""
+  echo "Priority code points:"
+  echo ""
   echo "${F_TAB}PCP #${F_TAB}Priority${F_TAB}Acronym${F_TAB}Traffic types"
-
   echo "${F_TAB}1${F_TAB}0 (lowest)${F_TAB}BK${F_TAB}Background"
   echo "${F_TAB}0${F_TAB}1 (default)${F_TAB}BE${F_TAB}Best effort"
   echo "${F_TAB}2${F_TAB}2${F_TAB}${F_TAB}EE${F_TAB}Excellent effort"
@@ -114,8 +114,9 @@ get_help() {
   echo "${F_TAB}5${F_TAB}5${F_TAB}${F_TAB}VO${F_TAB}Voice, < 10 ms latency and jitter"
   echo "${F_TAB}6${F_TAB}6${F_TAB}${F_TAB}IC${F_TAB}Internetwork control"
   echo "${F_TAB}7${F_TAB}7 (highest)${F_TAB}NC${F_TAB}Network control"
-
-  echo "${F_NL}${C_ORANGERED1}This script may not work for all interfaces${NO_FORMAT}${F_NL}"
+  echo ""
+  echo "${C_ORANGERED1}This script may not work for all interfaces${NO_FORMAT}"
+  echo ""
 
   exit 0
 }
@@ -124,8 +125,8 @@ get_qos_map() {
   INGRESS=$(/usr/bin/ip -d link show "${1}" | /usr/bin/grep "ingress" | sed 's/[[:space:]]*ingress-qos-map //g')
   EGRESS=$(/usr/bin/ip -d link show "${1}" | /usr/bin/grep "egress" | sed 's/[[:space:]]*egress-qos-map //g')
 
-  echo "VLAN QoS priority for ${F_BOLD}${C_BLUE}${1}${NO_FORMAT}:${F_NL}"
-  
+  echo "VLAN QoS priority for ${F_BOLD}${C_BLUE}${1}${NO_FORMAT}:"
+  echo ""
   echo "${F_TAB}${F_BOLD}${C_YELLOW}Ingress QoS map${NO_FORMAT}: ${INGRESS}"
   echo "${F_TAB}${F_BOLD}${C_LIME}Egress QoS map${NO_FORMAT}:  ${EGRESS}"
 }
@@ -252,7 +253,9 @@ if [ ${BAD_IFACE} -eq 1 ] || [ ${BAD_PCP} -eq 1 ]; then check_exit; fi
 
 PCP_STR=$(pcp_to_string "${PCP}")
 
-echo "${F_NL}Setting ${F_BOLD}${C_BLUE}${IFACE}${NO_FORMAT} interface egress QoS priority to ${F_BOLD}${C_LIME}${PCP_STR}${NO_FORMAT}"
+echo ""
+echo "Setting ${F_BOLD}${C_BLUE}${IFACE}${NO_FORMAT} interface egress QoS priority to ${F_BOLD}${C_LIME}${PCP_STR}${NO_FORMAT}"
+echo ""
 
 /usr/bin/ip link set "${IFACE}" type vlan \
 	ingress 0:1 1:0 2:2 3:3 4:4 5:5 6:6 7:7 \
