@@ -235,6 +235,6 @@ if [ ${OPT_CONFIRM} -eq 1 ]; then
 
   printf "\nQoS priority for ${F_BOLD}${C_BLUE}%s${NO_FORMAT}:\n" "${IFACE}"
   # echo "QoS priority for ${F_BOLD}${C_BLUE}${IFACE}${NO_FORMAT}:"
-  print_yellow "${INGRESS}"
-  print_green "${EGRESS}"
+  printf "\t${F_BOLD}${C_YELLOW}Ingress QoS map${NO_FORMAT}: %s", "${INGRESS}"
+  printf "\t${F_BOLD}${C_LIME}Egress QoS map${NO_FORMAT}: %s", "${EGRESS}"
 fi
