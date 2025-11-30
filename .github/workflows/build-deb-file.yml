@@ -8,6 +8,11 @@ on:
 permissions:
   contents: write
 
+env:
+  DEB_PACKAGE_NAME: ${{ github.event.repository.name }}
+  TAG_NAME: ${{ github.ref_name }}
+  VERSION: ${TAG_NAME#v}
+
 jobs:
   build-deb:
     runs-on: ubuntu-latest
@@ -20,11 +25,11 @@ jobs:
       - name: Get tag name and remove 'v'
         id: get_version
         run: |
-          TAG_NAME="${{ github.ref_name }}"
-          VERSION="${TAG_NAME#v}" # Removes a leading 'v' if present
+          # TAG_NAME="${{ github.ref_name }}"
+          # VERSION="${TAG_NAME#v}" # Removes a leading 'v' if present
           echo "Original Tag Name: $TAG_NAME"
           echo "Version (without 'v'): $VERSION"
-          echo "VERSION=$VERSION" >> $GITHUB_ENV # Make VERSION available to subsequent steps
+          # echo "VERSION=$VERSION" >> $GITHUB_ENV # Make VERSION available to subsequent steps
 
       - name: Checkout repository
         id: checkout_repo
