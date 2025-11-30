@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  build-deb:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
