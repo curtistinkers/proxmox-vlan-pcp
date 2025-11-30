@@ -72,7 +72,7 @@ The output of which would be:
 Setting vmbr0.42 interface egress QoS priority to Critical Applications
 ```
 
-##### `/etc/nework/interfaces` post-up example
+##### `/etc/network/interfaces` post-up example
 
 ```sh
 auto vmbr0.42
@@ -91,13 +91,13 @@ systemctl enable --now sdn-vlan-qos-${ACRONYM}@${IFACE}
 
 ### Systemd template examples
 
-For example, if you want to set VLAN `42` on `vmbr0` to *Critical Application*:
+For example, if you want to set VLAN `42` on `vmbr0` to _Critical Application_:
 
 ```sh
 systemctl enable --now sdn-vlan-qos-ca@vmbr0.42
 ```
 
-Similarly, if you want to set VLAN `666` on `vmbr1` to *Voice*:
+Similarly, if you want to set VLAN `666` on `vmbr1` to _Voice_:
 
 ```sh
 systemctl enable --now sdn-vlan-qos-vo@vmbr0.666
