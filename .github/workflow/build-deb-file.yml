@@ -1,0 +1,41 @@
+name: Build .deb file
+
+on:
+  push:
+    tags:
+      - "v*" # Triggers on pushes to tags starting with "v"
+
+# permissions:
+#   contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: "REPO"
+
+      # - name: Set up Debian packaging tools
+      #   run: sudo apt-get update && sudo apt-get install -y dpkg-dev debhelper
+
+      # - name: Build .deb package
+      #   run: dpkg-deb --build proxmox-sdn-vlan-qos
+      
+      - name: Copy files to keep extraneous files out of the package, then build the package
+        run: |
+          mkdir PKG_SOURCE
+          cp -Rf REPO/usr REPO/DEBIAN PKG_SOURCE
+          dpkg-deb --build PKG_SOURCE proxmox-sdn-vlan-qos.deb
+        
+      - name: Create Release and Upload Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: proxmox-sdn-vlan-qos.deb
+
+      # - name: Upload .deb package
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: proxmox-sdn-vlan-qos
+      #     path: proxmox-sdn-vlan-qos.deb
