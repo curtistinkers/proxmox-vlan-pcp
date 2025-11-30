@@ -9,9 +9,8 @@ permissions:
   contents: write
 
 env:
-  DEB_PACKAGE_NAME: ${{ github.event.repository.name }}
-  TAG_NAME: ${{ github.ref_name }}
-  VERSION: ${TAG_NAME#v}
+  REPO_NAME: ${{ github.event.repository.name }}
+  VERSION: ${{ github.ref_name }}
 
 jobs:
   build-deb:
@@ -20,16 +19,15 @@ jobs:
       - name: Get repository name
         id: get_repo_name
         run: |
-          echo "Repository name: ${{ github.event.repository.name }}"
+          echo "Repository name: $REPO_NAME"
 
       - name: Get tag name and remove 'v'
         id: get_version
         run: |
-          # TAG_NAME="${{ github.ref_name }}"
-          # VERSION="${TAG_NAME#v}" # Removes a leading 'v' if present
-          echo "Original Tag Name: $TAG_NAME"
-          echo "Version (without 'v'): $VERSION"
-          # echo "VERSION=$VERSION" >> $GITHUB_ENV # Make VERSION available to subsequent steps
+          echo "Original Tag Name: ${VERSION}"
+          NO_V_VERSION="${VERSION#v}" # Removes a leading 'v' if present
+          echo "Version (without 'v'): ${NO_V_VERSION}"
+          echo "VERSION=${NO_V_VERSION}" >> ${GITHUB_ENV} # Make VERSION available to subsequent steps
 
       - name: Checkout repository
         id: checkout_repo
@@ -46,9 +44,9 @@ jobs:
       - name: Build .deb package
         id: build_deb_package
         run: |
-          dpkg-deb --build PKG_SOURCE ${{ github.event.repository.name }}_${{ env.VERSION }}_all.deb
+          dpkg-deb --build PKG_SOURCE ${REPO_NAME}_${VERSION}_all.deb
         
       - name: Create release and upload assets
         uses: softprops/action-gh-release@v2
         with:
-          files: ${{ github.event.repository.name }}_${{ env.VERSION }}_all.deb
+          files: ${REPO_NAME}_${VERSION}_all.deb
