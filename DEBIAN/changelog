@@ -1,3 +1,10 @@
+proxmox-sdn-vlan-qos (0.1.2) unstable; urgency=high
+
+  * Updated version to 0.1.2
+      - Fixed variable expansion in systemd service files
+
+ -- curtistinkers <curtistinkers.commit@gmail.com>  Wed, 30 Nov 2024 2:57:58 +0000
+
 proxmox-sdn-vlan-qos (0.1.1) unstable; urgency=high
 
   * Updated version to 0.1.1

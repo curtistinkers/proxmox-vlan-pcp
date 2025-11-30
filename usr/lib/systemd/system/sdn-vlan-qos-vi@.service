@@ -8,7 +8,7 @@ PartOf=pve-sdn-commit.service
 [Service]
 Type=oneshot
 Environment=PCP=4
-ExecStart=/usr/bin/ip link set %i type vlan ingress 0:1 1:0 2:2 3:3 4:4 5:5 6:6 7:7 egress 0:$PCP 1:$PCP 2:$PCP 3:$PCP 4:$PCP 5:$PCP 6:$PCP 7:$PCP
+ExecStart=/usr/bin/ip link set %i type vlan ingress 0:1 1:0 2:2 3:3 4:4 5:5 6:6 7:7 egress 0:${PCP} 1:${PCP} 2:${PCP} 3:${PCP} 4:${PCP} 5:${PCP} 6:${PCP} 7:${PCP}
 
 [Install]
 WantedBy=pve-sdn-commit.service
