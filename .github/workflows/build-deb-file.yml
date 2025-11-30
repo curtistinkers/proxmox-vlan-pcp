@@ -44,9 +44,9 @@ jobs:
       - name: Build .deb package
         id: build_deb_package
         run: |
-          dpkg-deb --build PKG_SOURCE ${REPO_NAME}_${VERSION}_all.deb
+          dpkg-deb --build PKG_SOURCE ${{ env.REPO_NAME }}_${{ env.VERSION }}_all.deb
         
       - name: Create release and upload assets
         uses: softprops/action-gh-release@v2
         with:
-          files: ${REPO_NAME}_${VERSION}_all.deb
+          files: ${{ env.REPO_NAME }}_${{ env.VERSION }}_all.deb
